@@ -3,6 +3,8 @@
   #:use-module (guix packages)
   #:use-module (guix build-system cmake)
   #:use-module (guix git-download)
+  #:use-module (gnu packages game-development)
+  #:use-module (ros kinetic base)
   )
 
 (define-public fcl
@@ -18,8 +20,12 @@
      (file-name (git-file-name name version))
      (sha256
       (base32
-       "050pmvwmnv9a8y03hakyvvi6z0hccv7p3qclnqq1s8csh27m6bfb"))))
+       "1gm4dc4r3d3dhylbj1m8m1wp477kjbfnxz8ppiakf9n77rgn2c93"))))
    (build-system cmake-build-system)
+   (native-inputs `(("boost:dev" ,boost "dev")))
+   (inputs
+    `(("libccd" ,libccd)
+      ("boost" ,boost)))
    (home-page "https://github.com/flexible-collision-library/fcl")
    (synopsis "Flexible Collision Library")
    (description
