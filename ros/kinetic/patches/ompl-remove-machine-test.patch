@@ -1,0 +1,11 @@
+--- a/tests/CMakeLists.txt	2020-06-09 12:31:45.964825649 +0200
++++ b/tests/CMakeLists.txt	2020-06-09 12:31:53.252772225 +0200
+@@ -26,7 +26,7 @@
+
+     # Test utilities
+ #    add_ompl_test(test_random util/random/random.cpp)
+-    add_ompl_test(test_machine_specs benchmark/machine_specs.cpp)
++    # add_ompl_test(test_machine_specs benchmark/machine_specs.cpp)
+
+     # Test base code
+     add_ompl_test(test_state_operations base/state_operations.cpp)

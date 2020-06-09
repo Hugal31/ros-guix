@@ -6,6 +6,7 @@
   ;#:use-module (guix download)
   ;#:use-module (guix gexp)
   #:use-module (guix build-system cmake)
+  #:use-module (gnu packages)
   #:use-module (gnu packages algebra)
   #:use-module (gnu packages gl)
   #:use-module (gnu packages graphics)
@@ -1017,15 +1018,19 @@
     (name "ompl")
     (version "1.2.3")
     (source
-      (origin
-        (method git-fetch)
-        (uri (git-reference
-               (url "https://github.com/ros-gbp/ompl-release.git")
-               (commit "release/kinetic/ompl/1.2.3-1")))
-        (file-name (git-file-name name version))
-        (sha256
-          (base32
-            "032i5yax9dajkp4ag78c8nxaawky50kc1pbyczwp8yh4z87sks2a"))))
+     (origin
+      (method git-fetch)
+      (uri (git-reference
+	    (url "https://github.com/ros-gbp/ompl-release.git")
+	    (commit "release/kinetic/ompl/1.2.3-1")))
+      (file-name (git-file-name name version))
+      (sha256
+       (base32
+	"032i5yax9dajkp4ag78c8nxaawky50kc1pbyczwp8yh4z87sks2a"))
+      (patches
+       (search-patches
+	"ros/kinetic/patches/ompl-remove-machine-test.patch"
+	"ros/kinetic/patches/ompl-test-resources-readonly.patch"))))
     (build-system cmake-build-system)
     (native-inputs
      `(("boost:dev" ,boost "dev")

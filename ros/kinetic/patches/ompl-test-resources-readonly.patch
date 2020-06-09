@@ -1,0 +1,11 @@
+--- a/tests/resources/environment2D.h	2020-06-09 12:18:16.830908838 +0200
++++ b/tests/resources/environment2D.h	2020-06-09 12:18:36.606754202 +0200
+@@ -75,7 +75,7 @@
+ /** Load a grid representing the environment */
+ static void loadEnvironment(const char *filename, Environment2D &env)
+ {
+-    std::fstream in(filename);
++    std::ifstream in(filename);
+     while (in.good() && !in.eof())
+     {
+         std::string name;
