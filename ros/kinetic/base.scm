@@ -60,7 +60,23 @@
               (sha256
                (base32
                 "1rfkqxns60171q62cppiyzj8pmsbwp1l8jd7p6crriryqd7j1z7x"))
-              (patches (list (search-patch "ros/kinetic/patches/boost-mips-avoid-m32.patch")))))
+              (patches
+               (search-patches
+                "ros/kinetic/patches/boost/chrono-duration.patch"
+                "ros/kinetic/patches/boost/pythonid.patch"
+                "ros/kinetic/patches/boost/mpi-allocator-c++0x.patch"
+                "ros/kinetic/patches/boost/fix-ftbfs-python-3.3.patch"
+                "ros/kinetic/patches/boost/hppa-long-double-config.patch"
+                "ros/kinetic/patches/boost/boost-python-examples.patch"
+                "ros/kinetic/patches/boost/ppc64el-fp_traits-ibm-long-double.patch"
+                "ros/kinetic/patches/boost/no-gcc-m-options.diff"
+                "ros/kinetic/patches/boost/0002-Fix-a-regression-with-non-constexpr-types.patch"
+                "ros/kinetic/patches/boost/ec60c37295146bb80aa44a92cf416027b75b5ff7.patch"
+                "ros/kinetic/patches/boost/numeric-ublas-storage.hpp.patch"
+                "ros/kinetic/patches/boost/openssl-no-ssl3.patch"
+                "ros/kinetic/patches/boost/provide-missing-source-jquery.patch"
+                "ros/kinetic/patches/boost/no-gcc-march-options.patch"
+                "ros/kinetic/patches/boost/Changes-required-for-aarch64-support-in-boost-config.patch"))))
     (build-system gnu-build-system)
     (outputs '("out" "dev"))
     (inputs `(("zlib" ,zlib)))
