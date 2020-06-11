@@ -17,13 +17,17 @@
   #:use-module (gnu packages documentation)
   #:use-module (gnu packages gcc)
   #:use-module (gnu packages gl)
+  #:use-module (gnu packages gnome)
   #:use-module (gnu packages graphics)
   #:use-module (gnu packages graphviz)
+  #:use-module (gnu packages gtk)
   #:use-module (gnu packages guile)
   #:use-module (gnu packages image)
+  #:use-module ((gnu packages image-processing) #:prefix image-processing:)
   #:use-module (gnu packages maths)
   #:use-module (gnu packages time)
   #:use-module (gnu packages qt)
+  #:use-module (gnu packages photo)
   #:use-module (gnu packages protobuf)
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-xyz)
@@ -40,7 +44,9 @@
   #:use-module (gnu packages web)
   #:use-module (gnu packages wxwidgets)
   #:use-module (gnu packages xml)
+  #:use-module (gnu packages xorg)
   #:use-module (ice-9 ftw)
+  #:use-module (ice-9 match)
   #:use-module (log4cxx)
   #:use-module (console-bridge)
   #:use-module (ros kinetic ros-tools)
@@ -876,15 +882,16 @@ across a broad spectrum of applications.")
           (base32
             "15f2kl8dpvz77ihsz2dx75akady60kr242wqj1y1qi39vvhmp3ii"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("message-generation" ,message-generation)))
     (inputs
-      `(("message-generation" ,message-generation)
-        ("geometry-msgs" ,geometry-msgs)
-        ("std-msgs" ,std-msgs)))
+     `(("cpp-common" ,cpp-common)
+       ("roscpp-serialization" ,roscpp-serialization)
+       ("message-runtime" ,message-runtime)))
     (propagated-inputs
-      `(("geometry-msgs" ,geometry-msgs)
-        ("std-msgs" ,std-msgs)
-        ("message-runtime" ,message-runtime)))
+     `(("geometry-msgs" ,geometry-msgs)
+       ("std-msgs" ,std-msgs)))
     (home-page "http://ros.org/wiki/octomap_msgs")
     (synopsis
       "This package provides messages and serializations / conversion for the <a href=\"http://octomap.github.com\">OctoMap library</a>.")
@@ -907,13 +914,15 @@ across a broad spectrum of applications.")
       (base32
        "0na2wvwd85h5zlwm32fjka1q03sqqrl39dmgcbj71z7p1hyzgijw"))))
    (build-system cmake-build-system)
-   (native-inputs `(("catkin" ,catkin)))
+   (native-inputs
+    `(("catkin" ,catkin)
+      ("message-generation" ,message-generation)))
    (inputs
-    `(("message-generation" ,message-generation)
-      ("std-msgs" ,std-msgs)))
+    `(("cpp-common" ,cpp-common)
+      ("message-runtime" ,message-runtime)
+      ("roscpp-serialization" ,roscpp-serialization)))
    (propagated-inputs
-    `(("message-runtime" ,message-runtime)
-      ("std-msgs" ,std-msgs)))
+    `(("std-msgs" ,std-msgs)))
    (home-page "http://wiki.ros.org/geometry_msgs")
    (synopsis
     "geometry_msgs provides messages for common geometric primitives\n such as points, vectors, and poses. These primitives are designed\n to provide a common data type and facilitate interoperability\n throughout the system.")
@@ -936,15 +945,18 @@ across a broad spectrum of applications.")
           (base32
             "1a92rg3b63w5fqdld8ixnj8gibwl33snqfx2s6386bjllwmc9w48"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("message-generation" ,message-generation)))
     (inputs
-      `(("geometry-msgs" ,geometry-msgs)
-        ("message-generation" ,message-generation)
-        ("std-msgs" ,std-msgs)))
+     `(("cpp-common" ,cpp-common)
+       ("geometry-msgs" ,geometry-msgs)
+       ("roscpp-serialization" ,roscpp-serialization)
+       ("std-msgs" ,std-msgs)))
     (propagated-inputs
-      `(("geometry-msgs" ,geometry-msgs)
-        ("message-runtime" ,message-runtime)
-        ("std-msgs" ,std-msgs)))
+     `(("geometry-msgs" ,geometry-msgs)
+       ("message-runtime" ,message-runtime)
+       ("std-msgs" ,std-msgs)))
     (home-page "http://ros.org/wiki/sensor_msgs")
     (synopsis
       "This package defines messages for commonly used sensors, including\n cameras and scanning laser rangefinders.")
@@ -967,15 +979,16 @@ across a broad spectrum of applications.")
           (base32
             "072wbwk1r7yz35ay669sh2lypys9wl1pr39dasx6b0a2hyvhx01v"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("message-generation" ,message-generation)))
     (inputs
-      `(("geometry-msgs" ,geometry-msgs)
-        ("message-generation" ,message-generation)
-        ("std-msgs" ,std-msgs)))
+     `(("cpp-common" ,cpp-common)
+       ("roscpp-serialization" ,roscpp-serialization)))
     (propagated-inputs
-      `(("geometry-msgs" ,geometry-msgs)
-        ("message-runtime" ,message-runtime)
-        ("std-msgs" ,std-msgs)))
+     `(("geometry-msgs" ,geometry-msgs)
+       ("message-runtime" ,message-runtime)
+       ("std-msgs" ,std-msgs)))
     (home-page "http://wiki.ros.org/shape_msgs")
     (synopsis
       "This package contains messages for defining shapes, such as simple solid\n object primitives (cube, sphere, etc), planes, and meshes.")
@@ -1049,22 +1062,24 @@ across a broad spectrum of applications.")
     (build-system cmake-build-system)
     (native-inputs `(("catkin" ,catkin)))
     (inputs
-      `(("cmake-modules" ,cmake-modules)
-        ("geometry-msgs" ,geometry-msgs)
-        ("eigen" ,eigen)
-        ("orocos-kdl" ,orocos-kdl)
-        ("std-msgs" ,std-msgs)))
+     `(("cmake-modules" ,cmake-modules)
+       ("cpp-common" ,cpp-common)
+       ("geometry-msgs" ,geometry-msgs)
+       ("eigen" ,eigen)
+       ("orocos-kdl" ,orocos-kdl)
+       ("roscpp-serialization" ,roscpp-serialization)
+       ("std-msgs" ,std-msgs)))
     (propagated-inputs
-      `(("geometry-msgs" ,geometry-msgs)
-        ("eigen" ,eigen)
-        ("orocos-kdl" ,orocos-kdl)
-        ("std-msgs" ,std-msgs)))
+     `(("geometry-msgs" ,geometry-msgs)
+       ("eigen" ,eigen)
+       ("orocos-kdl" ,orocos-kdl)
+       ("std-msgs" ,std-msgs)))
     (home-page
-      "http://ros.org/wiki/eigen_conversions")
+     "http://ros.org/wiki/eigen_conversions")
     (synopsis
-      "Conversion functions between:\n - Eigen and KDL\n - Eigen and geometry_msgs.")
+     "Conversion functions between:\n - Eigen and KDL\n - Eigen and geometry_msgs.")
     (description
-      "Conversion functions between:\n - Eigen and KDL\n - Eigen and geometry_msgs.")
+     "Conversion functions between:\n - Eigen and KDL\n - Eigen and geometry_msgs.")
     (license license:bsd-3)))
 
 (define-public eigen-stl-containers
@@ -1197,16 +1212,17 @@ across a broad spectrum of applications.")
           (base32
             "1z41ywhia4l6ysd9zc4kxcillyk45r1bpl6hyfbb59pih1mkqi2y"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("message-generation" ,message-generation)))
     (inputs
-      `(("message-generation" ,message-generation)
-        ("geometry-msgs" ,geometry-msgs)
-        ("std-msgs" ,std-msgs)))
+     `(("cpp-common", cpp-common)
+       ("roscpp-serialization" ,roscpp-serialization)
+       ("message-runtime" ,message-runtime)
+       ("rosbag-migration-rule" ,rosbag-migration-rule)))
     (propagated-inputs
-      `(("message-runtime" ,message-runtime)
-        ("geometry-msgs" ,geometry-msgs)
-        ("std-msgs" ,std-msgs)
-        ("rosbag-migration-rule" ,rosbag-migration-rule)))
+      `(("geometry-msgs" ,geometry-msgs)
+        ("std-msgs" ,std-msgs)))
     (home-page "http://wiki.ros.org/trajectory_msgs")
     (synopsis
       "This package defines messages for defining robot trajectories. These messages are\n also the building blocks of most of the\n <a href=\"http://wiki.ros.org/control_msgs\">control_msgs</a> actions.")
@@ -1230,14 +1246,15 @@ across a broad spectrum of applications.")
           (base32
             "13c8mmflnl6wgnpvvha6qb5x07v542imyg6cal4g3s29c95rjilq"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("message-generation" ,message-generation)))
     (inputs
-      `(("geometry-msgs" ,geometry-msgs)
-        ("message-generation" ,message-generation)
-        ("std-msgs" ,std-msgs)))
+     `(("cpp-common", cpp-common)
+       ("roscpp-serialization" ,roscpp-serialization)
+       ("message-runtime" ,message-runtime)))
     (propagated-inputs
       `(("geometry-msgs" ,geometry-msgs)
-        ("message-runtime" ,message-runtime)
         ("std-msgs" ,std-msgs)))
     (home-page
       "http://ros.org/wiki/visualization_msgs")
@@ -1262,7 +1279,9 @@ across a broad spectrum of applications.")
           (base32
             "1q5wjivb2x51mhd61wrjid4jqmjhwxz2mrjnc1r04hjawqpxkmxk"))))
     (build-system cmake-build-system)
-    ; (native-inputs `(("cmake" ,cmake)))
+    (arguments
+     '(#:configure-flags '("-DENABLE_TESTS=ON") #:test-target "check"))
+    (native-inputs `(("cppunit" ,cppunit)))
     (inputs `(("eigen" ,eigen)))
     (propagated-inputs
       `(("catkin" ,catkin)
@@ -1291,6 +1310,8 @@ across a broad spectrum of applications.")
           (base32
             "0acmczkmhcbihjn6zrc9s8p56yv48b61mzf7krbglvaaq0mysmbn"))))
     (build-system cmake-build-system)
+    ;; TODO Run test, disable the http test.
+    (arguments '(#:configure-flags '("-DCATKIN_ENABLE_TESTING=OFF") #:tests? #f))
     (native-inputs
       `(("catkin" ,catkin)
         ("boost:dev" ,boost "dev")))
@@ -1453,18 +1474,16 @@ across a broad spectrum of applications.")
           (base32
             "0iadqp7bbpypvck0lj7chbyvgr7jw4rpsnyxx8hvk1s7047l5srg"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("message-generation" ,message-generation)))
     (inputs
-      `(("actionlib-msgs" ,actionlib-msgs)
-        ("geometry-msgs" ,geometry-msgs)
-        ("message-generation" ,message-generation)
-        ("sensor-msgs" ,sensor-msgs)
-        ("shape-msgs" ,shape-msgs)
-        ("std-msgs" ,std-msgs)))
+      `(("cpp-common" ,cpp-common)
+        ("roscpp-serialization" ,roscpp-serialization)
+	("message-runtime" ,message-runtime)))
     (propagated-inputs
       `(("actionlib-msgs" ,actionlib-msgs)
         ("geometry-msgs" ,geometry-msgs)
-        ("message-runtime" ,message-runtime)
         ("sensor-msgs" ,sensor-msgs)
         ("shape-msgs" ,shape-msgs)
         ("std-msgs" ,std-msgs)))
@@ -1516,29 +1535,39 @@ across a broad spectrum of applications.")
           (base32
             "0fc9jh9f2z00p4hqf13l0qsnq5a5pvby29liss9h03cx6kmyb22b"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (arguments
+     `(#:make-flags '("all" "tests")
+       #:phases
+       (modify-phases %standard-phases
+		      (add-before 'check 'set-ros-home
+				  (lambda _
+				    (setenv "ROS_HOME" (getcwd))
+				    #t)))))
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("boost:dev" ,boost "dev")
+       ("googletest", googletest)
+       ("message-generation" ,message-generation)
+       ("python2-nose", python2-nose)
+       ("rostest", rostest)))
     (inputs
-      `(("angles" ,angles)
-        ("geometry-msgs" ,geometry-msgs)
-        ("message-filters" ,message-filters)
-        ("message-generation" ,message-generation)
-        ("rosconsole" ,rosconsole)
-        ("roscpp" ,roscpp)
-        ("rostime" ,rostime)
-        ("sensor-msgs" ,sensor-msgs)
-        ("std-msgs" ,std-msgs)
-        ("tf2-ros" ,tf2-ros)))
+     `(("actionlib" ,actionlib)
+       ("angles" ,angles)
+       ("boost" ,boost)
+       ("message-filters" ,message-filters)
+       ("message-runtime" ,message-runtime)
+       ("rosconsole" ,rosconsole)
+       ("roscpp" ,roscpp)
+       ("rostime" ,rostime)
+       ("sensor-msgs" ,sensor-msgs)))
     (propagated-inputs
-      `(("geometry-msgs" ,geometry-msgs)
-        ("graphviz" ,graphviz)
-        ("message-filters" ,message-filters)
-        ("message-runtime" ,message-runtime)
-        ("rosconsole" ,rosconsole)
-        ("roscpp" ,roscpp)
-        ("roswtf" ,roswtf)
-        ("sensor-msgs" ,sensor-msgs)
-        ("std-msgs" ,std-msgs)
-        ("tf2-ros" ,tf2-ros)))
+     `(("geometry-msgs" ,geometry-msgs)
+       ("graphviz" ,graphviz)
+       ("rosconsole" ,rosconsole)
+       ("roswtf" ,roswtf)
+       ("sensor-msgs" ,sensor-msgs)
+       ("std-msgs" ,std-msgs)
+       ("tf2-ros" ,tf2-ros)))
     (home-page "http://www.ros.org/wiki/tf")
     (synopsis
       "tf is a package that lets the user keep track of multiple coordinate\nframes over time. tf maintains the relationship between coordinate\nframes in a tree structure buffered in time, and lets the user\ntransform points, vectors, etc between any two coordinate frames at\nany desired point in time.\n\n <p><b>Migration</b>: Since ROS Hydro, tf has been &quot;deprecated&quot; in favor of <a href=\"http://wiki.ros.org/tf2\">tf2</a>. tf2 is an iteration on tf providing generally the same feature set more efficiently. As well as adding a few new features.<br/>\n As tf2 is a major change the tf API has been maintained in its current form. Since tf2 has a superset of the tf features with a subset of the dependencies the tf implementation has been removed and replaced with calls to tf2 under the hood. This will mean that all users will be compatible with tf2. It is recommended for new work to use tf2 directly as it has a cleaner interface. However tf will continue to be supported for through at least J Turtle.\n </p>")
@@ -1561,15 +1590,18 @@ across a broad spectrum of applications.")
           (base32
             "03nvg4m557q950v1hn6wbczhx1cdy2nv9l7xvp41n7cfg2a7ngvv"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (native-inputs
+     `(("boost:dev" ,boost "dev")
+       ("catkin" ,catkin)
+       ("message-generation" ,message-generation)))
     (inputs
-      `(("actionlib-msgs" ,actionlib-msgs)
-        ("geometry-msgs" ,geometry-msgs)
-        ("message-generation" ,message-generation)))
+     `(("boost" ,boost)
+       ("cpp-common" ,cpp-common)
+       ("roscpp-serialization" ,roscpp-serialization)
+       ("message-runtime" ,message-runtime)))
     (propagated-inputs
-      `(("actionlib-msgs" ,actionlib-msgs)
-        ("geometry-msgs" ,geometry-msgs)
-        ("message-generation" ,message-generation)))
+     `(("actionlib-msgs" ,actionlib-msgs)
+       ("geometry-msgs" ,geometry-msgs)))
     (home-page "http://www.ros.org/wiki/tf2_msgs")
     (synopsis "tf2_msgs")
     (description "tf2_msgs")
@@ -1590,17 +1622,31 @@ across a broad spectrum of applications.")
           (base32
             "1gjhhr77l0cms1qlz9valyf1znwhixygyxxydi3sr21l9hccgjjk"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (arguments
+     `(#:make-flags '("all" "tests")
+       #:phases
+       (modify-phases %standard-phases
+       (add-before 'check 'set-ros-home
+	 (lambda _
+	   (setenv "ROS_HOME" (getcwd)))))))
+    (native-inputs
+     `(("boost:dev" ,boost "dev")
+       ("catkin" ,catkin)
+       ("googletest" ,googletest)
+       ("message-generation" ,message-generation)
+       ("python2-nose" ,python2-nose)))
     (inputs
-      `(("console-bridge" ,console-bridge)
-        ("geometry-msgs" ,geometry-msgs)
-        ("rostime" ,rostime)
-        ("tf2-msgs" ,tf2-msgs)))
+     `(("boost" ,boost)
+       ("cpp-common" ,cpp-common)
+       ("roscpp" ,roscpp)
+       ("roscpp-serialization" ,roscpp-serialization)
+       ("console-bridge" ,console-bridge)
+       ("rostime" ,rostime)))
     (propagated-inputs
-      `(("console-bridge" ,console-bridge)
-        ("geometry-msgs" ,geometry-msgs)
-        ("rostime" ,rostime)
-        ("tf2-msgs" ,tf2-msgs)))
+     `(("console-bridge" ,console-bridge)
+       ("geometry-msgs" ,geometry-msgs)
+       ("rostime" ,rostime)
+       ("tf2-msgs" ,tf2-msgs)))
     (home-page "http://www.ros.org/wiki/tf2")
     (synopsis
       "tf2 is the second generation of the transform library, which lets\n the user keep track of multiple coordinate frames over time. tf2\n maintains the relationship between coordinate frames in a tree\n structure buffered in time, and lets the user transform points,\n vectors, etc between any two coordinate frames at any desired\n point in time.")
@@ -1679,33 +1725,42 @@ across a broad spectrum of applications.")
           (base32
             "0z328zc2dw3j6kimivvnb3y2jv4nnnc0dp0mvby35zrgknyc1n89"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (arguments
+     `(#:make-flags '("all" "tests")
+       #:phases
+       (modify-phases %standard-phases
+		      (add-before 'check 'set-ros-home
+				  (lambda _
+				    (setenv "ROS_HOME" (getcwd))
+				    #t)))))
+    (native-inputs
+     `(("boost:dev" ,boost "dev")
+       ("catkin" ,catkin)
+       ("googletest" ,googletest)
+       ("python2-nose" ,python2-nose)
+       ("rostest", rostest)))
     (inputs
-      `(("actionlib" ,actionlib)
-        ("actionlib-msgs" ,actionlib-msgs)
-        ("geometry-msgs" ,geometry-msgs)
-        ("message-filters" ,message-filters)
-        ("roscpp" ,roscpp)
-        ("rosgraph" ,rosgraph)
-        ("rospy" ,rospy)
-        ("std-msgs" ,std-msgs)
-        ("tf2" ,tf2)
-        ("tf2-msgs" ,tf2-msgs)
-        ("tf2-py" ,tf2-py)
-        ("xmlrpcpp" ,xmlrpcpp)))
+     `(("actionlib" ,actionlib)
+       ("boost" ,boost)
+       ("geometry-msgs" ,geometry-msgs)
+       ("message-filters" ,message-filters)
+       ("roscpp" ,roscpp)
+       ("rosgraph" ,rosgraph)
+       ("rospy" ,rospy)
+       ("std-msgs" ,std-msgs)
+       ("tf2" ,tf2)
+       ("tf2-msgs" ,tf2-msgs)
+       ("tf2-py" ,tf2-py)
+       ("xmlrpcpp" ,xmlrpcpp)))
     (propagated-inputs
-      `(("actionlib" ,actionlib)
-        ("actionlib-msgs" ,actionlib-msgs)
-        ("geometry-msgs" ,geometry-msgs)
-        ("message-filters" ,message-filters)
-        ("roscpp" ,roscpp)
-        ("rosgraph" ,rosgraph)
-        ("rospy" ,rospy)
-        ("std-msgs" ,std-msgs)
-        ("tf2" ,tf2)
-        ("tf2-msgs" ,tf2-msgs)
-        ("tf2-py" ,tf2-py)
-        ("xmlrpcpp" ,xmlrpcpp)))
+     `(("actionlib-msgs" ,actionlib-msgs)
+       ("geometry-msgs" ,geometry-msgs)
+       ("rosgraph" ,rosgraph)
+       ("rospy" ,rospy)
+       ("std-msgs" ,std-msgs)
+       ("tf2-msgs" ,tf2-msgs)
+       ("tf2-py" ,tf2-py)
+       ("xmlrpcpp" ,xmlrpcpp)))
     (home-page "http://www.ros.org/wiki/tf2_ros")
     (synopsis
       "This package contains the ROS bindings for the tf2 library, for both Python and C++.")
@@ -1728,15 +1783,23 @@ across a broad spectrum of applications.")
           (base32
             "0yvrscsb4v4xmdlh5yydmdxqi8f51080pcgks7rz0k5g1yy1kh1q"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
-    (inputs `(("rostest" ,rostest)))
+    (arguments
+     ;; Relies on rospy/talker.py
+     `(#:tests? #f))
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("googletest" ,googletest)
+       ("python2-nose" ,python2-nose)
+       ("roslang" ,roslang)
+       ("rostest" ,rostest)))
+    (inputs
+     `(("rosbuild" ,rosbuild)
+       ("roslib" ,roslib)))
     (propagated-inputs
       `(("python2-paramiko" ,python2-paramiko)
         ("python2-rospkg" ,python2-rospkg)
-        ("rosbuild" ,rosbuild)
         ("rosgraph" ,rosgraph)
         ("roslaunch" ,roslaunch)
-        ("roslib" ,roslib)
         ("rosnode" ,rosnode)
         ("rosservice" ,rosservice)))
     (home-page "http://ros.org/wiki/roswtf")
@@ -1761,6 +1824,8 @@ across a broad spectrum of applications.")
           (base32
             "1bfhxf09pslq364nl4kd0g1mfa7hni0r8h6pkn2m6jh5vd89wz7c"))))
     (build-system cmake-build-system)
+    ;; rostest search for a talker.py in the rospy package, which doesn't exists.
+    (arguments `(#:tests? #f))
     (native-inputs
      `(("catkin" ,catkin)
        ("boost:dev" ,boost "dev")))
@@ -1912,10 +1977,18 @@ across a broad spectrum of applications.")
           (base32
             "1pmqgzy0jj88nz6d7q2vpf0hk0pb2q179bgq8azch1ivm8bjm61k"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
-    (inputs `(("rostest" ,rostest)))
+    ;; Depends on rospy/talker.py
+    (arguments `(#:tests? #f))
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("googletest" ,googletest)
+       ("python2-nose" ,python2-nose)
+       ("rostest" ,rostest)))
+    (inputs
+     `())
     (propagated-inputs
-      `(("rosgraph" ,rosgraph) ("rostopic" ,rostopic)))
+     `(("rosgraph" ,rosgraph)
+       ("rostopic" ,rostopic)))
     (home-page "http://ros.org/wiki/rosnode")
     (synopsis
       "rosnode is a command-line tool for displaying debug information\n about ROS <a href=\"http://www.ros.org/wiki/Nodes\">Nodes</a>,\n including publications, subscriptions and connections. It also\n contains an experimental library for retrieving node\n information. This library is intended for internal use only.")
@@ -2075,30 +2148,40 @@ across a broad spectrum of applications.")
         (file-name (git-file-name name version))
         (sha256
           (base32
-            "1n5v75f07k1g8ps4b821jp38l32gx2w7mizn7cw7yjg0552aw6wf"))))
+	   "1n5v75f07k1g8ps4b821jp38l32gx2w7mizn7cw7yjg0552aw6wf"))
+	(patches
+	 (search-patches
+	  ;; For some reason, we need a sleep to make the test pass all the times.
+	  ;; FIXME: Assert this is not a bug.
+	  "ros/kinetic/patches/actionlib-fix-test.patch"))))
     (build-system cmake-build-system)
+    (arguments
+     `(#:make-flags '("all" "tests")
+       #:phases
+       (modify-phases %standard-phases
+       (add-before 'check 'set-ros-home
+		   (lambda _
+		     (setenv "ROS_HOME" (getcwd))
+		     #t)))))
     (native-inputs
      `(("catkin" ,catkin)
-       ("boost:dev" ,boost "dev")))
+       ("boost:dev" ,boost "dev")
+       ("googletest" ,googletest)
+       ("message-generation" ,message-generation)
+       ("python2-nose" ,python2-nose)
+       ("rosnode" ,rosnode)
+       ("rostest" ,rostest)
+       ("rostopic" ,rostopic)))
     (inputs
-      `(("message-generation" ,message-generation)
-        ("actionlib-msgs" ,actionlib-msgs)
-        ("boost" ,boost)
-        ("roscpp" ,roscpp)
-        ("rospy" ,rospy)
-        ("rostest" ,rostest)
-        ("std-msgs" ,std-msgs)))
+     `(("boost" ,boost)
+       ("message-runtime" ,message-runtime)
+       ("roscpp" ,roscpp)
+       ("roslib" ,roslib)
+       ("rospy" ,rospy)))
     (propagated-inputs
-      `(("message-runtime" ,message-runtime)
-        ("python2-wxpython" ,python2-wxpython)
-        ("roslib" ,roslib)
-        ("rostopic" ,rostopic)
-        ("actionlib-msgs" ,actionlib-msgs)
-        ("boost" ,boost)
-        ("roscpp" ,roscpp)
-        ("rospy" ,rospy)
-        ("rostest" ,rostest)
-        ("std-msgs" ,std-msgs)))
+     `(("actionlib-msgs" ,actionlib-msgs)
+       ("python2-wxpython" ,python2-wxpython)
+       ("std-msgs" ,std-msgs)))
     (home-page "http://www.ros.org/wiki/actionlib")
     (synopsis
       "The actionlib stack provides a standardized interface for\n interfacing with preemptable tasks. Examples of this include moving\n the base to a target location, performing a laser scan and returning\n the resulting point cloud, detecting the handle of a door, etc.")
@@ -2145,12 +2228,19 @@ across a broad spectrum of applications.")
           (base32
             "0zf06v7ffk7nrz84hgggf313da56byykk6xih25q93k9wvjlvrdz"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
-    (inputs `(("rostest" ,rostest)))
-    (propagated-inputs
-      `(("genpy" ,genpy)
-        ("rosbag" ,rosbag)
-        ("rospy" ,rospy)))
+    (arguments
+     ;; Tests relies on rospy/talker.py, which doesn't exists???
+     `(#:tests? #f))
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("googletest" ,googletest-1.8)
+       ("python2-nose" ,python2-nose)
+       ("rostest" ,rostest)))
+    (inputs
+     `(("genpy" ,genpy)
+       ;; Rosbag include topic-tools, which include rostopic...
+       ("rosbag" ,rosbag)
+       ("rospy" ,rospy)))
     (home-page "http://ros.org/wiki/rostopic")
     (synopsis
       "rostopic contains the rostopic command-line tool for displaying\n debug information about\n ROS <a href=\"http://www.ros.org/wiki/Topics\">Topics</a>, including\n publishers, subscribers, publishing rate,\n and ROS <a href=\"http://www.ros.org/wiki/Messages\">Messages</a>. It also\n contains an experimental Python library for getting information about\n and interacting with topics dynamically. This library is for\n internal-use only as the code API may change, though it does provide\n examples of how to implement dynamic subscription and publication\n behaviors in ROS.")
@@ -2284,24 +2374,27 @@ across a broad spectrum of applications.")
           (base32
             "0xrdsvpcvjq2h6zqapdsf2p4wm5lqdri3yzgldppzynxsywmpzky"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (arguments
+     `(#:tests? #f))
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("message-generation" ,message-generation)
+       ("googletest" ,googletest-1.8)
+       ("python2-nose" ,python2-nose)
+       ("rostest" ,rostest)
+       ;; Needed for tests, but normally it includes this package, so there is a recursive dependency...
+       ; ("rostopic" ,rostopic)
+       ("rosunit" ,rosunit)))
     (inputs
-      `(("cpp-common" ,cpp-common)
-        ("message-generation" ,message-generation)
-        ("rosconsole" ,rosconsole)
-        ("roscpp" ,roscpp)
-        ("rostest" ,rostest)
-        ("rostime" ,rostime)
-        ("rosunit" ,rosunit)
-        ("std-msgs" ,std-msgs)
-        ("xmlrpcpp" ,xmlrpcpp)))
+     `(("cpp-common" ,cpp-common)
+       ("message-runtime" ,message-runtime)
+       ("rosconsole" ,rosconsole)
+       ("roscpp" ,roscpp)
+       ("rostime" ,rostime)
+       ("xmlrpcpp" ,xmlrpcpp)))
     (propagated-inputs
-      `(("message-runtime" ,message-runtime)
-        ("rosconsole" ,rosconsole)
-        ("roscpp" ,roscpp)
-        ("rostime" ,rostime)
-        ("std-msgs" ,std-msgs)
-        ("xmlrpcpp" ,xmlrpcpp)))
+     `(("rosconsole" ,rosconsole)
+       ("std-msgs" ,std-msgs)))
     (home-page "http://ros.org/wiki/topic_tools")
     (synopsis
       "Tools for directing, throttling, selecting, and otherwise messing with\n ROS topics at a meta level. None of the programs in this package actually\n know about the topics whose streams they are altering; instead, these\n tools deal with messages as generic binary blobs. This means they can be\n applied to any ROS topic.")
@@ -2350,22 +2443,30 @@ across a broad spectrum of applications.")
           (base32
             "04d86vfhk675scm5wk8ydcxfb89grlf0nifnm1blcnnxzq7mbr9l"))))
     (build-system cmake-build-system)
+    (arguments
+     `(#:make-flags '("all" "tests")
+       #:phases
+       (modify-phases %standard-phases
+		      (add-before 'check 'set-ros-home
+				  (lambda _
+				    (setenv "ROS_HOME" (getcwd))
+				    #t)))))
     (native-inputs
      `(("catkin" ,catkin)
-       ("boost:dev" ,boost "dev")))
+       ("boost:dev" ,boost "dev")
+       ("googletest" ,googletest-1.8)
+       ("message-generation" ,message-generation)
+       ("rostest" ,rostest)))
     (inputs
-     `(("message-generation" ,message-generation)
+     `(("boost" ,boost)
+       ("message-runtime" ,message-runtime)
        ("roscpp-serialization" ,roscpp-serialization)
-       ("rostest" ,rostest)
-       ("boost" ,boost)
+       ("roslib" ,roslib)
        ("roscpp" ,roscpp)
        ("std-msgs" ,std-msgs)))
     (propagated-inputs
-     `(("message-runtime" ,message-runtime)
-       ("roslib" ,roslib)
-       ("rospy" ,rospy)
+     `(("rospy" ,rospy)
        ("rosservice" ,rosservice)
-       ("roscpp" ,roscpp)
        ("std-msgs" ,std-msgs)))
     (home-page
       "http://ros.org/wiki/dynamic_reconfigure")
@@ -2430,21 +2531,19 @@ across a broad spectrum of applications.")
           (base32
             "09f998cacs3z958kn1vna1ma0vqfl3wbyzygq8kqx61x1wz9mfhm"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (native-inputs
+     `(("boost:dev" ,boost "dev")
+       ("catkin" ,catkin)))
     (inputs
-      `(("message-filters" ,message-filters)
-        ("pluginlib" ,pluginlib)
-        ("rosconsole" ,rosconsole)
-        ("roscpp" ,roscpp)
-        ("roslib" ,roslib)
-        ("sensor-msgs" ,sensor-msgs)))
+     `(("boost" ,boost)
+       ("class-loader" ,class-loader)
+       ("message-filters" ,message-filters)
+       ("pluginlib" ,pluginlib)
+       ("rosconsole" ,rosconsole)
+       ("roscpp" ,roscpp)
+       ("roslib" ,roslib)))
     (propagated-inputs
-      `(("message-filters" ,message-filters)
-        ("pluginlib" ,pluginlib)
-        ("rosconsole" ,rosconsole)
-        ("roscpp" ,roscpp)
-        ("roslib" ,roslib)
-        ("sensor-msgs" ,sensor-msgs)))
+     `(("sensor-msgs" ,sensor-msgs)))
     (home-page "http://ros.org/wiki/image_transport")
     (synopsis
       "image_transport should always be used to subscribe to and publish images. It provides transparent\n support for transporting images in low-bandwidth compressed formats. Examples (provided by separate\n plugin packages) include JPEG/PNG compression and Theora streaming video.")
@@ -2467,17 +2566,23 @@ across a broad spectrum of applications.")
           (base32
             "0sv9nx279jph4vs4cqq3yg00dy1prgw5gr1c76zgbpprq56k5x19"))))
     (build-system cmake-build-system)
+    ;; TODO Make CV-bridge work with this version of OpenCV
+    (arguments '(#:tests? #f #:make-flags '("all" "cv_bridge-utest")))
     (native-inputs
      `(("catkin" ,catkin)
-       ("boost:dev" ,boost "dev")))
+       ("boost:dev" ,boost "dev")
+       ("googletest" ,googletest-1.8)
+       ("python2-nose" ,python2-nose)
+       ("python2-numpy" ,python2-numpy)
+       ("rostest" ,rostest)))
     (inputs
       `(("boost" ,boost)
-        ("opencv3" ,opencv3)
         ("python" ,python)
         ("rosconsole" ,rosconsole)
+	("roscpp-serialization" ,roscpp-serialization)
         ("sensor-msgs" ,sensor-msgs)))
     (propagated-inputs
-      `(("opencv3" ,opencv3)
+      `(("opencv" ,opencv)
         ("python" ,python)
         ("rosconsole" ,rosconsole)))
     (home-page "http://www.ros.org/wiki/cv_bridge")
@@ -2505,11 +2610,13 @@ across a broad spectrum of applications.")
     (build-system cmake-build-system)
     (native-inputs `(("catkin" ,catkin)))
     (inputs
-      `(("geometry-msgs" ,geometry-msgs)
-        ("orocos-kdl" ,orocos-kdl)))
+     `(("cpp-common" ,cpp-common)
+       ("geometry-msgs" ,geometry-msgs)
+       ("orocos-kdl" ,orocos-kdl)
+       ("roscpp-serialization" ,roscpp-serialization)))
     (propagated-inputs
-      `(("geometry-msgs" ,geometry-msgs)
-        ("orocos-kdl" ,orocos-kdl)))
+     `(("geometry-msgs" ,geometry-msgs)
+       ("orocos-kdl" ,orocos-kdl)))
     (home-page "http://ros.org/wiki/kdl_conversions")
     (synopsis
       "Conversion functions between KDL and geometry_msgs types.")
@@ -2533,6 +2640,9 @@ across a broad spectrum of applications.")
           (base32
             "0qksys76qghk3iwc67g933fzapidqq96wnh9qbi3g01dpvcj0iac"))))
     (build-system cmake-build-system)
+    ;; TODO Run the python tests
+    (arguments
+     `(#:tests? #f))
     (native-inputs `(("cmake" ,cmake)))
     (inputs
       `(("orocos-kdl" ,orocos-kdl)
@@ -2549,46 +2659,179 @@ across a broad spectrum of applications.")
       "This package contains the python bindings PyKDL for the Kinematics and Dynamics\n Library (KDL), distributed by the Orocos Project.")
     (license license:bsd-3)))
 
-(define-public opencv3
+(define-public opencv
   (package
-    (name "opencv3")
+    (inherit image-processing:opencv)
+    #|
+    (name "opencv")
     (version "3.3.1")
-    (source
-      (origin
-        (method git-fetch)
-        (uri (git-reference
-               (url "https://github.com/ros-gbp/opencv3-release.git")
-               (commit "release/kinetic/opencv3/3.3.1-5")))
-        (file-name (git-file-name name version))
-        (sha256
-          (base32
-            "1r888cshc37aj0fqzzzp3wnb0l197z237km5h9asa9h7s2p76n5h"))))
-    (build-system cmake-build-system)
-    (native-inputs `(("cmake" ,cmake)))
-    (inputs
-      `(("ffmpeg" ,ffmpeg-3.4)
-        ("libjpeg" ,ijg-libjpeg-8)
-        ("libpng" ,libpng-1.2)
-        ("libtiff" ,libtiff)
-        ;("v4l" ,v4l)
-        ;("vtk-qt" ,vtk-qt)
-        ("libwebp" ,libwebp)
-        ("protobuf" ,protobuf)
-        ("python" ,python)
-        ("python2-numpy" ,python2-numpy)
-        ("zlib" ,zlib)))
-    (propagated-inputs
-      `(("catkin" ,catkin)
-        ;("vtk-qt" ,vtk-qt)
-        ;("libwebp" ,libwebp)
-        ("protobuf" ,protobuf-2)
-        ("python" ,python)
-        ("python2-numpy" ,python2-numpy)
-        ("zlib" ,zlib)))
-    (home-page "http://opencv.org")
-    (synopsis "OpenCV 3.x")
-    (description "OpenCV 3.x")
-    (license license:bsd-3)))
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://github.com/opencv/opencv")
+		    (commit version)))
+	      (file-name (git-file-name name version))
+	      (sha256
+	       (base32
+		"1z8rbv3b73a9h56jd7f3bhjpllh3nf6a18i7b42yqn68ij9qcgk0"))
+	      (modules '((guix build utils)))
+	      (snippet
+	       '(begin
+		  ;; Remove external libraries. We have all available in Guix:
+		  (delete-file-recursively "3rdparty")
+
+		  ;; Milky icon set is non-free:
+		  (delete-file-recursively "modules/highgui/src/files_Qt/Milky")
+
+		  ;; Some jars found:
+		  (for-each delete-file
+			    '("modules/java/pure_test/lib/junit-4.11.jar"
+			      "samples/java/sbt/sbt/sbt-launch.jar"))
+		  #t))))
+    (arguments
+     `(#:make-flags '("opencv_dnn" "all")
+       #:configure-flags
+       (list "-DWITH_IPP=OFF"
+             "-DWITH_ITT=OFF"
+             "-DWITH_CAROTENE=OFF" ; only visible on arm/aarch64
+             "-DENABLE_PRECOMPILED_HEADERS=OFF"
+
+             ;; CPU-Features:
+             ;; See cmake/OpenCVCompilerOptimizations.cmake
+             ;; (CPU_ALL_OPTIMIZATIONS) for a list of all optimizations
+             ;; BASELINE is the minimum optimization all CPUs must support
+             ;;
+             ;; DISPATCH is the list of optional dispatches.
+             "-DCPU_BASELINE=SSE2"
+
+             ,@(match (%current-system)
+		      ("x86_64-linux"
+		       '("-DCPU_DISPATCH=NEON;VFPV3;FP16;SSE;SSE2;SSE3;SSSE3;SSE4_1;SSE4_2;POPCNT;AVX;FP16;AVX2;FMA3;AVX_512F;AVX512_SKX"
+			 "-DCPU_DISPATCH_REQUIRE=SSE3,SSSE3,SSE4_1,SSE4_2,AVX,AVX2"))
+		      ("armhf-linux"
+		       '("-DCPU_BASELINE_DISABLE=NEON")) ; causes build failures
+		      ("aarch64-linux"
+		       '("-DCPU_BASELINE=NEON"
+			 "-DCPU_DISPATCH=NEON;VFPV3;FP16"))
+		      (_ '()))
+
+             "-DBUILD_PERF_TESTS=OFF"
+             "-DBUILD_TESTS=ON"
+
+             (string-append "-DOPENCV_EXTRA_MODULES_PATH=" (getcwd)
+                            "/opencv-contrib/modules")
+
+             ;;Define test data:
+             (string-append "-DOPENCV_TEST_DATA_PATH=" (getcwd)
+                            "/opencv-extra/testdata")
+
+             ;; Is ON by default and would try to rebuild 3rd-party protobuf,
+             ;; which we had removed, which would lead to an error:
+             "-DBUILD_PROTOBUF=OFF"
+
+             ;; Rebuild protobuf files, because we have a slightly different
+             ;; version than the included one. If we would not update, we
+             ;; would get a compile error later:
+             "-DPROTOBUF_UPDATE_FILES=ON"
+
+             ;; xfeatures2d disabled, because it downloads extra binaries from
+             ;; https://github.com/opencv/opencv_3rdparty
+             ;; defined in xfeatures2d/cmake/download_{vgg|bootdesc}.cmake
+             ;; Cmp this bug entry:
+             ;; https://github.com/opencv/opencv_contrib/issues/1131
+             "-DBUILD_opencv_xfeatures2d=OFF")
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'unpack 'disable-broken-tests
+           (lambda _
+             ;; These tests fails with:
+             ;; vtkXOpenGLRenderWindow (0x723990): Could not find a decent config
+             ;; I think we have no OpenGL support with the Xvfb.
+             (substitute* '("modules/viz/test/test_tutorial3.cpp"
+                            "modules/viz/test/test_main.cpp"
+                            "modules/viz/test/tests_simple.cpp"
+                            "modules/viz/test/test_viz3d.cpp")
+               (("(TEST\\(Viz, )([a-z].*\\).*)" all pre post)
+                (string-append pre "DISABLED_" post)))
+
+             ;; Failure reason: Bad accuracy
+             ;; Incorrect count of accurate poses [2nd case]: 90.000000 / 94.000000
+             (substitute* "../opencv-contrib/modules/rgbd/test/test_odometry.cpp"
+               (("(TEST\\(RGBD_Odometry_Rgbd, )(algorithmic\\).*)" all pre post)
+                (string-append pre "DISABLED_" post)))
+             #t))
+
+         (add-after 'unpack 'unpack-submodule-sources
+           (lambda* (#:key inputs #:allow-other-keys)
+             (mkdir "../opencv-extra")
+             (mkdir "../opencv-contrib")
+             (copy-recursively (assoc-ref inputs "opencv-extra")
+                               "../opencv-extra")
+             (invoke "tar" "xvf"
+                     (assoc-ref inputs "opencv-contrib")
+                     "--strip-components=1"
+                     "-C" "../opencv-contrib")))
+
+         (add-after 'set-paths 'add-ilmbase-include-path
+           (lambda* (#:key inputs #:allow-other-keys)
+           ;; OpenEXR propagates ilmbase, but its include files do not appear
+           ;; in the CPATH, so we need to add "$ilmbase/include/OpenEXR/" to
+           ;; the CPATH to satisfy the dependency on "ImathVec.h".
+           (setenv "CPATH"
+                   (string-append (assoc-ref inputs "ilmbase")
+                                  "/include/OpenEXR"
+                                  ":" (or (getenv "CPATH") "")))
+           #t))
+       (add-before 'check 'start-xserver
+         (lambda* (#:key inputs #:allow-other-keys)
+           (let ((xorg-server (assoc-ref inputs "xorg-server"))
+                 (disp ":1"))
+             (setenv "HOME" (getcwd))
+             (setenv "DISPLAY" disp)
+             ;; There must be a running X server and make check doesn't start one.
+             ;; Therefore we must do it.
+             (zero? (system (format #f "~a/bin/Xvfb ~a &" xorg-server disp)))))))))
+    (native-inputs
+     `(("pkg-config" ,pkg-config)
+       ("xorg-server" ,xorg-server-for-tests) ; For running the tests
+       ("opencv-extra"
+        ,(origin
+           (method git-fetch)
+           (uri (git-reference
+                  (url "https://github.com/opencv/opencv_extra")
+                  (commit version)))
+           (file-name (git-file-name "opencv_extra" version))
+           (sha256
+            (base32 "1ns5wy90jnr8ll4p32qaij1l9yr1gflhqbhlc6zxcqffk0hjni95"))))
+       ("opencv-contrib"
+        ,(origin
+           (method git-fetch)
+           (uri (git-reference
+                  (url "https://github.com/opencv/opencv_contrib")
+                  (commit version)))
+           (file-name (git-file-name "opencv_contrib" version))
+           (patches (search-patches "opencv-rgbd-aarch64-test-fix.patch"))
+           (sha256
+            (base32 "0q5vsa8dpa3mdhzas0ckagwh2sbckpm1kxsp0i3yfknsr5ampyi2"))))))
+    |#
+    (inputs `(("libjpeg" ,libjpeg-turbo)
+	      ("libpng" ,libpng)
+	      ("jasper" ,jasper)
+	      ;; ffmpeg 4.0 causes core dumps in tests.
+	      ("ffmpeg" ,ffmpeg-3.4)
+	      ("libtiff" ,libtiff)
+	      ("hdf5" ,hdf5)
+	      ("libgphoto2" ,libgphoto2)
+	      ("libwebp" ,libwebp)
+	      ("zlib" ,zlib)
+	      ("gtkglext" ,gtkglext)
+	      ("openexr" ,openexr)
+	      ("ilmbase" ,ilmbase)
+	      ("gtk+" ,gtk+-2)
+	      ("python2-numpy" ,python2-numpy)
+	      ("protobuf" ,protobuf)
+	      ("vtk" ,image-processing:vtk)
+	      ("python2" ,python-2.7)))))
 
 (define-public control-msgs
   (package
@@ -2605,19 +2848,18 @@ across a broad spectrum of applications.")
           (base32
             "0qh0p42gs9g6fh7n7riq9qjafbinr5gr0g8c8ydfxrk1xihi06x7"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("message-generation" ,message-generation)))
     (inputs
-      `(("message-generation" ,message-generation)
-        ("std-msgs" ,std-msgs)
-        ("trajectory-msgs" ,trajectory-msgs)
-        ("geometry-msgs" ,geometry-msgs)
-        ("actionlib-msgs" ,actionlib-msgs)))
+     `(("cpp-common", cpp-common)
+       ("roscpp-serialization" ,roscpp-serialization)
+       ("message-runtime" ,message-runtime)))
     (propagated-inputs
-      `(("message-runtime" ,message-runtime)
-        ("std-msgs" ,std-msgs)
-        ("trajectory-msgs" ,trajectory-msgs)
-        ("geometry-msgs" ,geometry-msgs)
-        ("actionlib-msgs" ,actionlib-msgs)))
+     `(("actionlib-msgs" ,actionlib-msgs)
+       ("geometry-msgs" ,geometry-msgs)
+       ("std-msgs" ,std-msgs)
+       ("trajectory-msgs" ,trajectory-msgs)))
     (home-page "http://ros.org/wiki/control_msgs")
     (synopsis
       "control_msgs contains base messages and actions useful for\n controlling robots. It provides representations for controller\n setpoints and joint and cartesian trajectories.")
@@ -2710,12 +2952,13 @@ across a broad spectrum of applications.")
           (base32
             "1ni1z7kpl1k4x0hzvmzz5qf93kkgb3p6rvchxbyfy5nwbygw8clx"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
-    (inputs
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("rostest" ,rostest)))
+     (inputs
       `(("rosconsole" ,rosconsole)
         ("roscpp" ,roscpp)
         ("rospy" ,rospy)
-        ("rostest" ,rostest)
         ("std-msgs" ,std-msgs)
         ("tf" ,tf)
         ("visualization-msgs" ,visualization-msgs)))
@@ -2723,7 +2966,6 @@ across a broad spectrum of applications.")
       `(("rosconsole" ,rosconsole)
         ("roscpp" ,roscpp)
         ("rospy" ,rospy)
-        ("rostest" ,rostest)
         ("std-msgs" ,std-msgs)
         ("tf" ,tf)
         ("visualization-msgs" ,visualization-msgs)))
@@ -2910,17 +3152,17 @@ across a broad spectrum of applications.")
           (base32
             "115vffj9shhidpzjwww9yml7n6jmjw07b6243qr01mkfnfba9k6c"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("message-generation" ,message-generation)))
     (inputs
-      `(("message-generation" ,message-generation)
-        ("std-msgs" ,std-msgs)
-        ("sensor-msgs" ,sensor-msgs)
-        ("nav-msgs" ,nav-msgs)))
+     `(("cpp-common" ,cpp-common)
+       ("message-runtime" ,message-runtime)
+       ("roscpp-serialization" ,roscpp-serialization)))
     (propagated-inputs
-      `(("message-runtime" ,message-runtime)
-        ("std-msgs" ,std-msgs)
-        ("sensor-msgs" ,sensor-msgs)
-        ("nav-msgs" ,nav-msgs)))
+     `(("std-msgs" ,std-msgs)
+       ("sensor-msgs" ,sensor-msgs)
+       ("nav-msgs" ,nav-msgs)))
     (home-page "http://ros.org/wiki/map_msgs")
     (synopsis
       "This package defines messages commonly used in mapping packages.")
@@ -2943,17 +3185,17 @@ across a broad spectrum of applications.")
           (base32
             "1xzg8x6fn0kb799d4ianh5sxwmxr2rl3nm20xr7adw2a86v4g1jp"))))
     (build-system cmake-build-system)
-    (native-inputs `(("catkin" ,catkin)))
+    (native-inputs
+     `(("catkin" ,catkin)
+       ("message-generation" ,message-generation)))
     (inputs
-      `(("geometry-msgs" ,geometry-msgs)
-        ("message-generation" ,message-generation)
-        ("std-msgs" ,std-msgs)
-        ("actionlib-msgs" ,actionlib-msgs)))
+     `(("cpp-common" ,cpp-common)
+       ("message-runtime" ,message-runtime)
+       ("roscpp-serialization" ,roscpp-serialization)))
     (propagated-inputs
-      `(("geometry-msgs" ,geometry-msgs)
-        ("message-runtime" ,message-runtime)
-        ("std-msgs" ,std-msgs)
-        ("actionlib-msgs" ,actionlib-msgs)))
+     `(("actionlib-msgs" ,actionlib-msgs)
+       ("geometry-msgs" ,geometry-msgs)
+       ("std-msgs" ,std-msgs)))
     (home-page "http://wiki.ros.org/nav_msgs")
     (synopsis
       "nav_msgs defines the common messages used to interact with the\n <a href=\"http://wiki.ros.org/navigation\">navigation</a> stack.")

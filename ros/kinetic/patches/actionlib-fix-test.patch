@@ -1,0 +1,11 @@
+--- a/test/ref_server.py	2020-06-12 12:46:29.191734327 +0200
++++ b/test/ref_server.py	2020-06-12 12:47:00.871599511 +0200
+@@ -50,6 +50,8 @@
+         goal = gh.get_goal()
+ 
+         rospy.loginfo("Got goal %d", int(goal.goal))
++        import time
++        time.sleep(0.1)
+         if goal.goal == 1:
+             gh.set_accepted()
+             gh.set_succeeded(None, "The ref server has succeeded")
